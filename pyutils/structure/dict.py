@@ -21,10 +21,10 @@ def update(d, u):
     return d
 
 
-def flatten(d):
+def flatten(d, delimiter='.'):
     def expand(key, value):
         if isinstance(value, dict):
-            return [ (key + '.' + k, v) for k, v in flatten(value).items() ]
+            return [ (key + delimiter + k, v) for k, v in flatten(value).items() ]
         else:
             return [ (key, value) ]
 

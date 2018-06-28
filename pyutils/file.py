@@ -2,6 +2,7 @@ import os
 from .errors import OutOfOptionsError
 from .structure.list import flatten as flatten_list
 from random import SystemRandom
+import shutil
 
 
 def readfile(f, mode='r'):
@@ -46,6 +47,35 @@ class FilenameGenerators:
 
 def ensuredir(d):
     os.makedirs(d, exist_ok=True)
+
+
+def dir_empty(d):
+    try:
+        return len(os.listdir(d)) == 0
+    except FileNotFoundError:
+        return True
+
+
+def is_empty(df):
+    if os.path.isdir(df):
+        return dir_empty(df)
+    elif os.path.isfile(df):
+        return file_empty(df)
+
+
+def file_empty(f):
+    try:
+        return os.path.getsize(f) == 0
+    except FileNotFoundError:
+        return True
+
+
+def clear_directory(directory):
+    for root, dirs, files in os.walk(directory):
+        for f in files:
+            os.unlink(os.path.join(root, f))
+        for d in dirs:
+            shutil.rmtree(os.path.join(root, d))
 
 
 def get_next_filename(d, base, gen=FilenameGenerators.numerical_generator()):
