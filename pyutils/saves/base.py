@@ -1,5 +1,6 @@
 from .. import file
 from ..structure.dict import update
+from os import path
 
 class DataLoader:
     def __init__(self, filename, default=None, **options):
@@ -25,3 +26,8 @@ class DataLoader:
 
     def get_default_file_extension(self):
         return 'txt'
+
+
+def get_file_path(f: str):
+    """f = __file__"""
+    return path.dirname(f)

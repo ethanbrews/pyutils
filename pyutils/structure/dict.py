@@ -2,6 +2,7 @@ import collections
 
 
 def merge(x, y):
+    """Merge x with z, overwriting x with z where applicable"""
     z = x.copy()   # start with x's keys and values
     z.update(y)    # modifies z with y's keys and values & returns None
     return z
